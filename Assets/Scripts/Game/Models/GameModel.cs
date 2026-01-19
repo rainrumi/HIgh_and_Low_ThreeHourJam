@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using R3;
 
 public enum HighLowChoice
@@ -10,28 +9,36 @@ public enum HighLowChoice
     MAX
 }
 
-//public enum 
-
 public class GameModel : IDisposable
 {
-    public ReadOnlyReactiveProperty<int> OwnValue => _ownValue;
-    public ReadOnlyReactiveProperty<int> EnemyValue => _enemyValue;
-    //public ReadOnlyReactiveProperty<int> EnemyValue => _enemyValue;
-    
-    // 数字選択イベント
-    public Observable<int> OnClickValueSelected => _onClickValueSelected;
-    
-    private ReadOnlyReactiveProperty<int> _ownValue;
-    private ReadOnlyReactiveProperty<int> _enemyValue;
-    private readonly Subject<int> _onClickValueSelected = new();
+    public ReadOnlyReactiveProperty<int> MinCardValue => _minCardValue;
+    public ReadOnlyReactiveProperty<int> MaxCardValue => _maxCardValue;
 
-    //public UniTaskVoid Judge(HighLowChoice choice)
-    //{
-    //    
-    //}
+    public int OwnCard { get; private set; }
+    public int PeerCard { get; private set; }
+
+    private readonly ReactiveProperty<int> _minCardValue;
+    private readonly ReactiveProperty<int> _maxCardValue;
+
+    // カードのシャッフル
+    public void CardShuffle()
+    {
+        var ownValue = UnityEngine.Random.Range(_minCardValue.Value, _maxCardValue.Value + 1);
+        var peerValue = UnityEngine.Random.Range(_minCardValue.Value, _maxCardValue.Value + 1);
+
+        OwnCard = ownValue;
+        PeerCard = peerValue;
+    }
+
+    public GameModel(CardSettings settings)
+    {
+        _minCardValue = new ReactiveProperty<int>(settings.MinValue);
+        _maxCardValue = new ReactiveProperty<int>(settings.MaxValue);
+    }
     
     public void Dispose()
     {
-        
+        _minCardValue.Dispose();
+        _maxCardValue.Dispose();
     }
 }

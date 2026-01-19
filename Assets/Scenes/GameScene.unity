@@ -657,8 +657,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u304B\u30FC\u3069\u3092\u3048\u3089\u3079\uFF01"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dd777e21c5c3527438e7a2587e0a2f0b, type: 2}
-  m_sharedMaterial: {fileID: 1705552503442664006, guid: dd777e21c5c3527438e7a2587e0a2f0b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8b8e8c5d04720d44b932c4fe2917d759, type: 2}
+  m_sharedMaterial: {fileID: 1705552503442664006, guid: 8b8e8c5d04720d44b932c4fe2917d759, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -693,7 +693,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
