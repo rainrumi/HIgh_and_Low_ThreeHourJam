@@ -74,7 +74,7 @@ public class CardAnimation : IDisposable
         _isExpansioning = false;
     }
 
-    public async UniTaskVoid OnDestroyed()
+    public async UniTask OnDestroyed()
     {
         
     }
