@@ -6,39 +6,76 @@ using UnityEngine;
 
 public class CardAnimation : IDisposable
 {
+    private const float FLIP_DURATION = 0.3f;
+
     private readonly Vector3 _initialScale;
     private readonly Vector3 _initialPosition;
-    private readonly Quaternion _initialRotation;
+    private readonly Vector3 _initialRotation;
     private readonly Transform _transform;
+    private float _currentRotationY;
 
-    private Tween _flipTween;
-    private Tween _expansionTween;
+    private Tween _rotationTween;
+    private Tween _scaleTween;
     private bool _isExpansioning;
-    private bool _isFlipping;
-    private CancellationTokenSource _flipCts;
 
     public CardAnimation(Transform t)
     {
         _transform = t;
         _initialScale = _transform.localScale;
         _initialPosition = _transform.localPosition;
-        _initialRotation = _transform.localRotation;
+        _initialRotation = _transform.localEulerAngles;
+        _currentRotationY = _initialRotation.y;
     }
 
     public async UniTask FlipToFront()
     {
         CancelFlip();
 
+        var startRotationY = _currentRotationY;
+        var endRotationY = 0;
+
+        _rotationTween = DOTween.To(
+            () => _currentRotationY,
+            x =>
+            {
+                _currentRotationY = x;
+                var rot = _transform.localEulerAngles;
+                rot.y = x;
+                _transform.localEulerAngles = rot;
+            },
+            endRotationY,
+            FLIP_DURATION
+            ).SetEase(Ease.OutCubic);
+
+        await _rotationTween.AsyncWaitForCompletion();
     }
 
     public async UniTask FlipToBack()
     {
         CancelFlip();
+
+        var startRotationY = _currentRotationY;
+        var endRotationY = -180;
+
+        _rotationTween = DOTween.To(
+            () => _currentRotationY,
+            x =>
+            {
+                _currentRotationY = x;
+                var rot = _transform.localEulerAngles;
+                rot.y = x;
+                _transform.localEulerAngles = rot;
+            },
+            endRotationY,
+            FLIP_DURATION
+            ).SetEase(Ease.OutCubic);
+
+        await _rotationTween.AsyncWaitForCompletion();
     }
 
-    public async UniTask FlipToHidden()
+    public async UniTask Hide()
     {
-        CancelFlip();
+        
     }
 
     public async UniTask OnSpawned()
@@ -48,17 +85,11 @@ public class CardAnimation : IDisposable
 
     private void CancelFlip()
     {
-        _flipCts?.Cancel();
-        _flipCts?.Dispose();
-        _flipCts = null;
-
-        if(_flipTween!=null && _flipTween.IsActive())
+        if(_rotationTween!=null && _rotationTween.IsActive())
         {
-            _flipTween.Kill();
-            _flipTween = null;
+            _rotationTween.Complete();
+            _rotationTween = null;
         }
-
-        _isFlipping = false;
     }
 
     public void Expansion()

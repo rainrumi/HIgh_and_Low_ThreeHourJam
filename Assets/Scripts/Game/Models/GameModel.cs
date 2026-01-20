@@ -15,8 +15,8 @@ public class GameModel : IDisposable
     public ReadOnlyReactiveProperty<int> MinCardValue => _minCardValue;
     public ReadOnlyReactiveProperty<int> MaxCardValue => _maxCardValue;
 
-    public int OwnCard { get; private set; }
-    public int PeerCard { get; private set; }
+    public int OwnValue { get; private set; }
+    public int PeerValue { get; private set; }
 
     private readonly ReactiveProperty<int> _minCardValue;
     private readonly ReactiveProperty<int> _maxCardValue;
@@ -29,8 +29,8 @@ public class GameModel : IDisposable
         var ownValue = random.Range(_minCardValue.Value, _maxCardValue.Value + 1);
         var peerValue = random.Range(_minCardValue.Value, _maxCardValue.Value + 1);
 
-        OwnCard = ownValue;
-        PeerCard = peerValue;
+        OwnValue = ownValue;
+        PeerValue = peerValue;
     }
 
     public GameModel(CardSettings settings)

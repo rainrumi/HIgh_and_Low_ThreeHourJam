@@ -25,6 +25,7 @@ public class CardView : MonoBehaviour
 
     public async UniTask FlipToFront(int value)
     {
+        if (_state == State.Front) return;
         Value = value;
         await _cardAnimation.FlipToFront();
         _state = State.Front;
@@ -32,13 +33,15 @@ public class CardView : MonoBehaviour
 
     public async UniTask FlipToBack()
     {
+        if (_state == State.Back) return;
         await _cardAnimation.FlipToBack();
         _state = State.Back;
     }
 
     public async UniTask FlipToHidden()
     {
-        await _cardAnimation.FlipToHidden();
+        if (_state == State.Hidden) return;
+        await _cardAnimation.Hide();
         _state = State.Hidden;
     }
 
