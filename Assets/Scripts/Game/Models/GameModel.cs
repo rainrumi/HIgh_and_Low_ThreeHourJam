@@ -1,5 +1,6 @@
 using System;
 using R3;
+using RaruLib;
 
 public enum HighLowChoice
 {
@@ -20,11 +21,13 @@ public class GameModel : IDisposable
     private readonly ReactiveProperty<int> _minCardValue;
     private readonly ReactiveProperty<int> _maxCardValue;
 
+    private readonly IRandom random;
+
     // カードのシャッフル
     public void CardShuffle()
     {
-        var ownValue = UnityEngine.Random.Range(_minCardValue.Value, _maxCardValue.Value + 1);
-        var peerValue = UnityEngine.Random.Range(_minCardValue.Value, _maxCardValue.Value + 1);
+        var ownValue = random.Range(_minCardValue.Value, _maxCardValue.Value + 1);
+        var peerValue = random.Range(_minCardValue.Value, _maxCardValue.Value + 1);
 
         OwnCard = ownValue;
         PeerCard = peerValue;
