@@ -9,8 +9,8 @@ public class GameLifetimeScope : LifetimeScope
 
     [Header("Views")]
     [Header("Cards")]
-    [SerializeField] private CardView cardOwnView;
-    [SerializeField] private CardView cardPeerView;
+    [SerializeField] private CardOwnView cardOwnView;
+    [SerializeField] private CardPeerView cardPeerView;
 
     protected override void Configure(IContainerBuilder builder)
     {
