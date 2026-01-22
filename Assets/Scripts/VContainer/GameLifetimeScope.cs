@@ -9,8 +9,7 @@ public class GameLifetimeScope : LifetimeScope
 
     [Header("Views")]
     [Header("Cards")]
-    [SerializeField] private CardOwnView cardOwnView;
-    [SerializeField] private CardPeerView cardPeerView;
+    [SerializeField] private CardDeckView cardDeckView;
 
     protected override void Configure(IContainerBuilder builder)
     {
@@ -21,7 +20,6 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<GameModel>(Lifetime.Singleton);
 
         // Views
-        builder.RegisterInstance(cardOwnView);
-        builder.RegisterInstance(cardPeerView);
+        builder.RegisterInstance(cardDeckView);
     }
 }

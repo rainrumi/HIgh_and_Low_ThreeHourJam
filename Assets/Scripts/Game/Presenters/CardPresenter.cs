@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class CardPresenter : IDisposable
 {
+    private readonly GameModel _gameModel;
+    private readonly CardDeckView _cardDeckView;
+
     private readonly CompositeDisposable _disposables = new();
 
-    public CardPresenter(GameModel gameModel)
+    public CardPresenter(GameModel gameModel, CardDeckView cardDeckView)
     {
-        
+        _gameModel = gameModel;
+        _cardDeckView = cardDeckView;
     }
 
     public void Dispose()
     {
         _disposables.Dispose();
+        _gameModel.Dispose();
     }
 }
