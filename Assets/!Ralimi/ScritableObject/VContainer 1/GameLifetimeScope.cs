@@ -21,5 +21,11 @@ public class GameLifetimeScope : LifetimeScope
 
         // Views
         builder.RegisterInstance(cardDeckView);
+
+        // Presenter
+        builder.Register<CardPresenter>(Lifetime.Singleton);
+
+        // EntryPoint
+        builder.RegisterEntryPoint<GameInitializer>();
     }
 }

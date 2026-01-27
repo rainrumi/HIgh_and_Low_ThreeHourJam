@@ -28,4 +28,10 @@ public class CardDeckView : MonoBehaviour
 
     public CardDeck cardOwnDeckView => cardOwnDeckView;
     public CardDeck cardPeerDeckView => _cardPeerDeckView;
+
+    public void Initialize()
+    {
+        _cardOwnDeckView.Initialize();
+        _cardPeerDeckView.Initialize();
+    }
 }

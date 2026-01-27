@@ -13,6 +13,9 @@ public class CardPresenter : IDisposable
     {
         _gameModel = gameModel;
         _cardDeckView = cardDeckView;
+
+        // カードデッキ初期化
+        _cardDeckView.Initialize();
     }
 
     public void Dispose()
