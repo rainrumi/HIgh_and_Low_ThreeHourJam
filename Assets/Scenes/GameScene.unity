@@ -338,7 +338,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   cardSettings: {fileID: 11400000, guid: 5b7983ecbc38eb04e9b8a480f72abd2c, type: 2}
-  cardDeckView: {fileID: 1886042265}
+  cardDeckView: {fileID: 3705803824390761232}
 --- !u!4 &514478414
 Transform:
   m_ObjectHideFlags: 0
@@ -709,56 +709,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1886042264
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1886042266}
-  - component: {fileID: 1886042265}
-  m_Layer: 0
-  m_Name: CardDeckView
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1886042265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1886042264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 039728927ef29e74ab65245846c202bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cardOwnDeckView:
-    cardPrefab: {fileID: 4720137058503563246, guid: 2d2bfd681b8c02740b959ee2a3d6450e, type: 3}
-    cardContainer: {fileID: 392485958}
-  _cardPeerDeckView:
-    cardPrefab: {fileID: 4720137058503563246, guid: 2d2bfd681b8c02740b959ee2a3d6450e, type: 3}
-    cardContainer: {fileID: 1243374854}
---- !u!4 &1886042266
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1886042264}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1892202558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,6 +998,56 @@ MonoBehaviour:
   m_DetailTexSpeed: {x: 0, y: 0}
   m_CustomRoot: {fileID: 0}
   m_Flip: 0
+--- !u!4 &2763122423533301164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5376958547440805395}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3705803824390761232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5376958547440805395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039728927ef29e74ab65245846c202bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardOwnDeckView:
+    cardPrefab: {fileID: 4720137058503563246, guid: 2d2bfd681b8c02740b959ee2a3d6450e, type: 3}
+    cardContainer: {fileID: 392485958}
+  _cardPeerDeckView:
+    cardPrefab: {fileID: 4720137058503563246, guid: 2d2bfd681b8c02740b959ee2a3d6450e, type: 3}
+    cardContainer: {fileID: 1243374854}
+--- !u!1 &5376958547440805395
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2763122423533301164}
+  - component: {fileID: 3705803824390761232}
+  m_Layer: 0
+  m_Name: CardDeckView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1056,7 +1056,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 37356232}
   - {fileID: 1666700741}
-  - {fileID: 1886042266}
+  - {fileID: 2763122423533301164}
   - {fileID: 392485958}
   - {fileID: 1243374854}
   - {fileID: 514478414}
