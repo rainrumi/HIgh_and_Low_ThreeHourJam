@@ -2,7 +2,9 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System;
 using System.Threading;
+using TMPro;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CardAnimation : IDisposable
 {
@@ -18,13 +20,16 @@ public class CardAnimation : IDisposable
     private Tween _scaleTween;
     private bool _isExpansioning;
 
-    public CardAnimation(Transform t)
+    private TextMeshProUGUI _value;
+
+    public CardAnimation(Transform t, TextMeshProUGUI v)
     {
         _transform = t;
         _initialScale = _transform.localScale;
         _initialPosition = _transform.localPosition;
         _initialRotation = _transform.localEulerAngles;
         _currentRotationY = _initialRotation.y;
+        _value = v;
     }
 
     public async UniTask FlipToFront()
@@ -34,6 +39,8 @@ public class CardAnimation : IDisposable
         var startRotationY = _currentRotationY;
         var endRotationY = 0;
 
+        _value.enabled = false;
+
         _rotationTween = DOTween.To(
             () => _currentRotationY,
             x =>
@@ -48,6 +55,8 @@ public class CardAnimation : IDisposable
             ).SetEase(Ease.OutCubic);
 
         await _rotationTween.AsyncWaitForCompletion();
+
+        _value.enabled = true;
     }
 
     public async UniTask FlipToBack()
@@ -55,7 +64,9 @@ public class CardAnimation : IDisposable
         CancelFlip();
 
         var startRotationY = _currentRotationY;
-        var endRotationY = -180;
+        var endRotationY = -180f;
+
+        _value.enabled = false;
 
         _rotationTween = DOTween.To(
             () => _currentRotationY,
@@ -71,6 +82,8 @@ public class CardAnimation : IDisposable
             ).SetEase(Ease.OutCubic);
 
         await _rotationTween.AsyncWaitForCompletion();
+
+        _value.enabled = true;
     }
 
     public async UniTask Hide()

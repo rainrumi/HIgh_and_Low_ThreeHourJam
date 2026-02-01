@@ -26,7 +26,7 @@ public class CardDeckView : MonoBehaviour
     [SerializeField] CardDeck _cardOwnDeckView;
     [SerializeField] CardDeck _cardPeerDeckView;
 
-    public CardDeck cardOwnDeckView => cardOwnDeckView;
+    public CardDeck cardOwnDeckView => _cardOwnDeckView;
     public CardDeck cardPeerDeckView => _cardPeerDeckView;
 
     public void Initialize()

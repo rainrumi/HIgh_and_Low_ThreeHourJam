@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CardView : MonoBehaviour
@@ -14,9 +15,13 @@ public class CardView : MonoBehaviour
     private CardAnimation _cardAnimation;
     private State _state = State.Hidden;
 
-    public int Value { get; private set; } = 0;
-
+    [SerializeField] TextMeshProUGUI valueText;
     public void StopAllAnimations() => _cardAnimation?.Dispose();
+
+    public void SetCardValue(int _set)
+    {
+        valueText.text = $"{_set:00}";
+    }
 
     public async UniTask PlayAnimationAndDestroy()
     {
@@ -24,10 +29,9 @@ public class CardView : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public async UniTask FlipToFront(int value)
+    public async UniTask FlipToFront()
     {
         if (_state == State.Front) return;
-        Value = value;
         await _cardAnimation.FlipToFront();
         _state = State.Front;
     }
@@ -48,6 +52,7 @@ public class CardView : MonoBehaviour
 
     private async UniTaskVoid InitializeAsync()
     {
+        await FlipToBack();
         await _cardAnimation.OnSpawned();
     }
 
@@ -55,7 +60,7 @@ public class CardView : MonoBehaviour
 
     private void Awake()
     {
-        _cardAnimation = new CardAnimation(transform);
+        _cardAnimation = new CardAnimation(transform,valueText);
     }
 
     private void OnMouseEnter()
