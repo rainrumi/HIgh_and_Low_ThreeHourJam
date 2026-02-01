@@ -52,7 +52,6 @@ public class CardView : MonoBehaviour
 
     private async UniTaskVoid InitializeAsync()
     {
-        await FlipToBack();
         await _cardAnimation.OnSpawned();
     }
 

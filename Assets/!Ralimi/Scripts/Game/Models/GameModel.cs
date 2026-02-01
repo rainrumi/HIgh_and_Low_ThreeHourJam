@@ -11,6 +11,16 @@ public enum HighLowChoice
     MAX
 }
 
+public enum Phase
+{
+    Start,
+    Shuffle,
+    Choise,
+    Gudge,
+    Result,
+    NONE
+}
+
 public class GameModel : IDisposable
 {
     public ReadOnlyReactiveProperty<int> MinCardValue => _minCardValue;
@@ -23,6 +33,8 @@ public class GameModel : IDisposable
 
     public ReadOnlyReactiveProperty<HighLowChoice> GudgeChoise => _gudgeChoise;
 
+    public ReadOnlyReactiveProperty<Phase> GamePhase => _gamePhase;
+
     private readonly ReactiveProperty<int> _minCardValue;
     private readonly ReactiveProperty<int> _maxCardValue;
 
@@ -32,6 +44,8 @@ public class GameModel : IDisposable
     private readonly ReactiveProperty<bool> _canGudge;
 
     private readonly ReactiveProperty<HighLowChoice> _gudgeChoise;
+
+    private readonly ReactiveProperty<Phase> _gamePhase;
 
     private readonly IRandom random;
 
@@ -52,9 +66,40 @@ public class GameModel : IDisposable
     }
 
     // プレイヤーの選択
-    public void SetGudgeChoise(HighLowChoice choise)
+    public void SetGudgeChoise(HighLowChoice set)
     {
-        _gudgeChoise.Value = choise;
+        if (!_canGudge.Value) return;
+        _gudgeChoise.Value = set;
+    }
+
+    // フェーズ切り替え
+    public void SetPhase(Phase set)
+    {
+        if(set == _gamePhase.Value) return;
+        _gamePhase.Value = set;
+        OnChangePhase();
+    }
+
+    private void OnChangePhase()
+    {
+        switch(_gamePhase.Value)
+        {
+            case Phase.Start:
+                SetPhase(Phase.Shuffle);
+                break;
+            case Phase.Shuffle:
+                SetCanGudge(false);
+                CardShuffle();
+                SetPhase(Phase.Choise);
+                break;
+            case Phase.Choise:
+                SetCanGudge(true);
+                break;
+            case Phase.Gudge:
+                break;
+            case Phase.Result:
+                break;
+        }
     }
 
     public GameModel(CardSettings settings, IRandom iRandom)
@@ -66,10 +111,9 @@ public class GameModel : IDisposable
         _peerValue = new ReactiveProperty<int>(0);
         _canGudge = new ReactiveProperty<bool>(false);
         _gudgeChoise = new ReactiveProperty<HighLowChoice>(HighLowChoice.None);
+        _gamePhase = new ReactiveProperty<Phase>(Phase.NONE);
 
-        SetCanGudge(false);
-        CardShuffle();
-        SetCanGudge(true);
+        SetPhase(Phase.Start);
     }
     
     public void Dispose()

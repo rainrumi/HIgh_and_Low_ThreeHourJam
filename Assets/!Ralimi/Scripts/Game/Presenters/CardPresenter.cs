@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using R3;
 using System;
 
@@ -16,6 +17,21 @@ public class CardPresenter : IDisposable
         gameModel.PeerValue
             .Subscribe(value => cardDeckView.cardPeerDeckView.CardView.SetCardValue(value))
             .AddTo(_disposables);
+
+        gameModel.GamePhase
+            .Where(set=>set==Phase.Shuffle)
+            .Subscribe(_=>
+            {
+                cardDeckView.cardOwnDeckView.CardView.FlipToBack().Forget();
+                cardDeckView.cardPeerDeckView.CardView.FlipToBack().Forget();
+            }).AddTo(_disposables);
+
+        gameModel.GamePhase
+            .Where (set=>set==Phase.Choise)
+            .Subscribe(_=>
+            {
+                cardDeckView.cardOwnDeckView.CardView.FlipToFront().Forget();
+            }).AddTo(_disposables);
     }
 
     public void Dispose()

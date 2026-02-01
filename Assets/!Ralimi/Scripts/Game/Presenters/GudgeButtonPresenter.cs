@@ -19,6 +19,13 @@ public class GudgeButtonPresenter : IDisposable
                 gudgeButtonView.ButtonLowView.ButtonView.SetButtonInteractable(set);
             }
             ).AddTo(_disposables);
+
+        gudgeButtonView.ButtonHighView.ButtonView.OnClick
+            .Subscribe(_ => gameModel.SetGudgeChoise(HighLowChoice.High)).AddTo(_disposables);
+        gudgeButtonView.ButtonDrawView.ButtonView.OnClick
+            .Subscribe(_=>gameModel.SetGudgeChoise(HighLowChoice.Draw)).AddTo(_disposables);
+        gudgeButtonView.ButtonLowView.ButtonView.OnClick
+            .Subscribe(_ => gameModel.SetGudgeChoise(HighLowChoice.Low)).AddTo(_disposables);
     }
 
     public void Dispose()
