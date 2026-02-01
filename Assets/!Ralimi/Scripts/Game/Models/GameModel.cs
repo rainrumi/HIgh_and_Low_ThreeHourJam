@@ -21,6 +21,12 @@ public enum Phase
     NONE
 }
 
+public enum Result
+{
+    Win,
+    Lose
+}
+
 public class GameModel : IDisposable
 {
     public ReadOnlyReactiveProperty<int> MinCardValue => _minCardValue;
@@ -32,6 +38,8 @@ public class GameModel : IDisposable
     public ReadOnlyReactiveProperty<bool> CanGudge => _canGudge;
 
     public ReadOnlyReactiveProperty<HighLowChoice> GudgeChoise => _gudgeChoise;
+
+    public ReadOnlyReactiveProperty<Result> GameResult => _gameResult;
 
     public ReadOnlyReactiveProperty<Phase> GamePhase => _gamePhase;
 
@@ -46,6 +54,8 @@ public class GameModel : IDisposable
     private readonly ReactiveProperty<HighLowChoice> _gudgeChoise;
 
     private readonly ReactiveProperty<Phase> _gamePhase;
+
+    private readonly ReactiveProperty<Result> _gameResult;
 
     private readonly IRandom random;
 
@@ -70,14 +80,30 @@ public class GameModel : IDisposable
     {
         if (!_canGudge.Value) return;
         _gudgeChoise.Value = set;
+        SetPhase(Phase.Gudge);
     }
 
     // フェーズ切り替え
     public void SetPhase(Phase set)
     {
-        if(set == _gamePhase.Value) return;
+        if (set == _gamePhase.Value) return;
         _gamePhase.Value = set;
         OnChangePhase();
+    }
+
+    // 勝敗
+    private void SetResultState()
+    {
+        bool successHigh = _ownValue.Value < _peerValue.Value;
+        bool successDraw = _ownValue.Value == _peerValue.Value;
+        bool successLow = _ownValue.Value > _peerValue.Value;
+        bool win =
+            successHigh && _gudgeChoise.Value == HighLowChoice.High ||
+            successDraw && _gudgeChoise.Value == HighLowChoice.Draw ||
+            successLow  && _gudgeChoise.Value == HighLowChoice.Low;
+        
+        if(win) _gameResult.Value = Result.Win;
+        else _gameResult.Value = Result.Lose;
     }
 
     private void OnChangePhase()
@@ -96,8 +122,11 @@ public class GameModel : IDisposable
                 SetCanGudge(true);
                 break;
             case Phase.Gudge:
+                SetCanGudge(false);
+                SetPhase(Phase.Result);
                 break;
             case Phase.Result:
+                SetResultState();
                 break;
         }
     }
@@ -112,6 +141,7 @@ public class GameModel : IDisposable
         _canGudge = new ReactiveProperty<bool>(false);
         _gudgeChoise = new ReactiveProperty<HighLowChoice>(HighLowChoice.None);
         _gamePhase = new ReactiveProperty<Phase>(Phase.NONE);
+        _gameResult = new ReactiveProperty<Result>(Result.Win);
 
         SetPhase(Phase.Start);
     }

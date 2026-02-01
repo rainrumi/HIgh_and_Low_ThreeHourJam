@@ -32,6 +32,13 @@ public class CardPresenter : IDisposable
             {
                 cardDeckView.cardOwnDeckView.CardView.FlipToFront().Forget();
             }).AddTo(_disposables);
+
+        gameModel.GamePhase
+            .Where(set => set == Phase.Gudge)
+            .Subscribe(_ =>
+            {
+                cardDeckView.cardPeerDeckView.CardView.FlipToFront().Forget();
+            }).AddTo(_disposables);
     }
 
     public void Dispose()
